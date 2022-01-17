@@ -15,13 +15,13 @@ count = st_autorefresh(interval=2000, limit=100, key="fizzbuzzcounter")
 # The function returns a counter for number of refreshes. This allows the
 # ability to make special requests at different intervals based on the count
 if count == 0:
-    st.write("Call")
+    st.write("welcome")
 elif count % 3 == 0 and count % 5 == 0:
-    st.write("Me")
+    st.write("game")
 elif count % 3 == 0:
-    st.write("Daddy")
+    st.write("squid")
 elif count % 5 == 0:
-    st.write("plzz")
+    st.write("game")
 else:
     st.write(f"Count: {count}")
 # Create a connection object.

@@ -7,6 +7,31 @@ import plotly.express as px
 import plotly.io as pio
 pio.templates.default = "plotly_dark"
 
+import base64
+
+@st.cache(allow_output_mutation=True)
+
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+
+def set_png_as_page_bg(png_file):
+    bin_str = get_base64_of_bin_file(png_file)
+    page_bg_img = '''
+    <style>
+    body {
+    background-image: url("data:image/png;base64,%s");
+    background-size: cover;
+    }
+    </style>
+    ''' % bin_str
+
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+    return
+
+set_png_as_page_bg('aaa.png')
 
 # Run the autorefresh about every 2000 milliseconds (2 seconds) and stop
 # after it's been refreshed 100 times.
@@ -42,7 +67,21 @@ df = pd.DataFrame(rows)
 df['c'] = 1
 a = df.groupby('name').sum().reset_index()
 fig = px.bar(a, x='name', y='c')
-st.plotly_chart(fig, use_container_width=True)
+
+
+col1, col2 = st.columns(2)
+
+with col1:
+
+    st.header("A hjnfgdh")
+    st.image("https://static.streamlit.io/examples/owl.jpg")
+
+with col2:
+
+    st.header("Asdgdsgd dos")
+    st.plotly_chart(fig, use_container_width=True)
+
+
 # Print results.
 #for row in rows:
 #    st.write(f"{row.name} has a playerrr:")

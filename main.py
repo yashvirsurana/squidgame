@@ -73,14 +73,14 @@ fig = go.Figure()
 
 fig.add_trace(
     go.Bar(
-        x=a.c,
-        y=a.name,
+        y=a.c,
+        x=a.name,
         marker=go.bar.Marker(
             color="rgb(250, 56, 113)",
             line=dict(color="rgb(0, 0, 0)",
                       width=2)
         ),
-        orientation="h",
+        orientation="v",
     )
 )
 

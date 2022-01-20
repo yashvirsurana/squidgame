@@ -63,8 +63,9 @@ rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
 df = pd.DataFrame(rows)
 df['c'] = 1
-a = df.groupby('name').sum().reset_index()
+a = df.groupby('name').sum().reset_index().sort_values(by='c', ascending=True)
 a.c = a.c-1
+
 fig = px.bar(a, y='name', x='c', orientation='h')
 
 import plotly.graph_objects as go
@@ -73,20 +74,22 @@ fig = go.Figure()
 
 fig.add_trace(
     go.Bar(
-        y=a.c,
-        x=a.name,
+        x=a.c,
+        y=a.name,
         marker=go.bar.Marker(
             color="rgb(250, 56, 113)",
             line=dict(color="rgb(0, 0, 0)",
                       width=2)
         ),
-        orientation="v",
+        orientation="h",
     )
 )
 
 # update layout properties
 fig.update_layout(
     title=("SQUIDD"),
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)'
 )
 
 

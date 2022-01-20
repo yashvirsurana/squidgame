@@ -9,6 +9,12 @@ pio.templates.default = "plotly_white"
 
 import base64
 
+import random
+
+def random_line(fname):
+    lines = open(fname).read().splitlines()
+    return random.choice(lines)
+
 @st.cache(allow_output_mutation=True)
 
 def get_base64_of_bin_file(bin_file):
@@ -36,17 +42,17 @@ def set_png_as_page_bg(png_file):
 
 count = st_autorefresh(interval=2000, limit=10000, key="fizzbuzzcounter")
 
+st.write(random_line('cons.txt')[:50])
 
-if count == 0:
-    st.write("welcome")
-elif count % 3 == 0 and count % 5 == 0:
-    st.write("game")
-elif count % 3 == 0:
-    st.write("squid")
-elif count % 5 == 0:
-    st.write("game")
-else:
-    st.write(f"Count: {count}")
+img_src = "1.jpg"
+if count % 4 == 0:
+    img_src = "1.jpg"
+elif count % 4 == 1:
+    img_src = "2.jpg"
+elif count % 4 == 2:
+    img_src = "3.jpg"
+elif count % 4 == 3:
+    img_src = "4.jpg"
 
 
 conn = connect()
@@ -87,7 +93,7 @@ fig.add_trace(
 
 # update layout properties
 fig.update_layout(
-    title=("SQUIDD"),
+    title=("Winner Winner Chicken Dinner!"),
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)'
 )
@@ -99,14 +105,14 @@ col1, col2 = st.columns(2)
 
 with col1:
 
-    st.header("A hjnfgdh")
-    st.image("aaa.jpg")
+    st.header(random_line('cons.txt')[:11])
+    st.image(img_src)
 
 with col2:
 
     st.plotly_chart(fig, use_container_width=True)
 
-
+st.balloons()
 # Print results.
 #for row in rows:
 #    st.write(f"{row.name} has a playerrr:")

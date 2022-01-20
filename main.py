@@ -5,7 +5,7 @@ from gsheetsdb import connect
 from streamlit_autorefresh import st_autorefresh
 import plotly.express as px
 import plotly.io as pio
-pio.templates.default = "plotly_dark"
+pio.templates.default = "plotly_white"
 
 import base64
 
@@ -31,14 +31,12 @@ def set_png_as_page_bg(png_file):
     st.markdown(page_bg_img, unsafe_allow_html=True)
     return
 
-set_png_as_page_bg('aaa.png')
+#set_png_as_page_bg('aaa.png')
 
-# Run the autorefresh about every 2000 milliseconds (2 seconds) and stop
-# after it's been refreshed 100 times.
+
 count = st_autorefresh(interval=2000, limit=10000, key="fizzbuzzcounter")
 
-# The function returns a counter for number of refreshes. This allows the
-# ability to make special requests at different intervals based on the count
+
 if count == 0:
     st.write("welcome")
 elif count % 3 == 0 and count % 5 == 0:
@@ -49,11 +47,11 @@ elif count % 5 == 0:
     st.write("game")
 else:
     st.write(f"Count: {count}")
-# Create a connection object.
+
+
 conn = connect()
 
-# Perform SQL query on the Google Sheet.
-# Uses st.cache to only rerun when the query changes or after 10 min.
+
 #@st.cache(ttl=6)
 def run_query(query):
     rows = conn.execute(query, headers=1)
@@ -66,7 +64,32 @@ rows = run_query(f'SELECT * FROM "{sheet_url}"')
 df = pd.DataFrame(rows)
 df['c'] = 1
 a = df.groupby('name').sum().reset_index()
-fig = px.bar(a, x='name', y='c')
+a.c = a.c-1
+fig = px.bar(a, y='name', x='c', orientation='h')
+
+import plotly.graph_objects as go
+
+fig = go.Figure()
+
+fig.add_trace(
+    go.Bar(
+        x=a.c,
+        y=a.name,
+        marker=go.bar.Marker(
+            color="rgb(250, 56, 113)",
+            line=dict(color="rgb(0, 0, 0)",
+                      width=2)
+        ),
+        orientation="h",
+    )
+)
+
+# update layout properties
+fig.update_layout(
+    title=("SQUIDD"),
+)
+
+
 
 
 col1, col2 = st.columns(2)
@@ -74,11 +97,10 @@ col1, col2 = st.columns(2)
 with col1:
 
     st.header("A hjnfgdh")
-    st.image("https://static.streamlit.io/examples/owl.jpg")
+    st.image("aaa.jpg")
 
 with col2:
 
-    st.header("Asdgdsgd dos")
     st.plotly_chart(fig, use_container_width=True)
 
 

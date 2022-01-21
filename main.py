@@ -43,6 +43,7 @@ def set_png_as_page_bg(png_file):
 
 
 count = st_autorefresh(interval=2000, limit=10000, key="fizzbuzzcounter")
+count += 15
 
 st.write(random_line('cons.txt')[:50])
 
@@ -147,7 +148,7 @@ st.markdown(
 
 quote = open('quotes.txt').read().splitlines()
 num = (str(count)[-2])
-st.write(quote[(int(num)+15)*7%15])
+st.write(quote[int(num)*7%15])
 
 if count % 10 == 0:
     st.balloons()

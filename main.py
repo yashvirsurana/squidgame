@@ -132,7 +132,8 @@ st.markdown(
 
         @font-face {
         font-family: 'Game Of Squids';
-        src: url(../squidgame/GameOfSquids.woff2) format('woff2'),
+        src: url(../squidgame/GameOfSquids.ttf) format('truetype'),
+             url(../squidgame/GameOfSquids.woff2) format('woff2'),
              url(../squidgame/GameOfSquids.woff) format('woff');
         font-weight: normal;
         font-style: normal;

@@ -129,18 +129,17 @@ with col2:
 st.markdown(
         """
         <style>
-@font-face {
-  font-family: 'Game Of Squids';
-  font-style: normal;
-  font-weight: 400;
-  src: local(squidfont) format("woff2");
-}
-
-    html, body, [class*="css"]  {
-    font-family: 'Game Of Squids';
-    }
-    </style>
-
+        @font-face {
+          font-family: 'Game Of Squids';
+          font-style: normal;
+          font-weight: 400;
+          src: url("squidfont.ttf") format("truetype");
+        }
+        
+        html, body, [class*="css"]  {
+        font-family: 'Game Of Squids';
+        }
+        </style>
     """,
         unsafe_allow_html=True,
     )

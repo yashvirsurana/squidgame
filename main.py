@@ -130,14 +130,14 @@ st.markdown(
         """
         <style>
 @font-face {
-  font-family: 'Game of Squids';
+  font-family: 'Game Of Squids';
   font-style: normal;
   font-weight: 400;
   src: url(squidfont.woff2) format('woff2');
 }
 
     html, body, [class*="css"]  {
-    font-family: 'Game of Squids';
+    font-family: 'Game Of Squids';
     }
     </style>
 

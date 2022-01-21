@@ -3,7 +3,6 @@ import pandas as pd
 import streamlit as st
 from gsheetsdb import connect
 from streamlit_autorefresh import st_autorefresh
-import plotly.express as px
 import plotly.io as pio
 pio.templates.default = "plotly_white"
 
@@ -16,7 +15,6 @@ def random_line(fname):
     return random.choice(lines)
 
 @st.cache(allow_output_mutation=True)
-
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
@@ -37,8 +35,6 @@ def set_png_as_page_bg(png_file):
     st.markdown(page_bg_img, unsafe_allow_html=True)
     return
 
-#set_png_as_page_bg('aaa.png')
-
 
 count = st_autorefresh(interval=2000, limit=10000, key="fizzbuzzcounter")
 
@@ -53,6 +49,14 @@ elif count % 4 == 2:
     img_src = "3.jpg"
 elif count % 4 == 3:
     img_src = "4.jpg"
+
+
+from PIL import Image
+
+@st.cache(persist=True, show_spinner=False)
+def get_img(sourcef):
+    image = Image.open(sourcef)
+    return image
 
 
 conn = connect()
@@ -72,47 +76,75 @@ df['c'] = 1
 a = df.groupby('name').sum().reset_index().sort_values(by='c', ascending=True)
 a.c = a.c-1
 
-fig = px.bar(a, y='name', x='c', orientation='h')
-
 import plotly.graph_objects as go
 
-fig = go.Figure()
+@st.cache(persist=True, show_spinner=False)
+def give_fig(x,y):
+    fig = go.Figure()
 
-fig.add_trace(
-    go.Bar(
-        x=a.c,
-        y=a.name,
-        marker=go.bar.Marker(
-            color="rgb(250, 56, 113)",
-            line=dict(color="rgb(0, 0, 0)",
-                      width=2)
-        ),
-        orientation="h",
+    fig.add_trace(
+        go.Bar(
+            x=x,
+            y=y,
+            base=0.0001,
+            marker=go.bar.Marker(
+                color="rgb(250, 56, 113)",
+                line=dict(color="rgb(0, 0, 0)",
+                          width=3)
+            ),
+            orientation="h",
+        )
     )
-)
 
-# update layout properties
-fig.update_layout(
-    title=("Winner Winner Chicken Dinner!"),
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)'
-)
+    # update layout properties
+    fig.update_layout(
+        #title=("Winner Winner Chicken Dinner!"),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        bargap=0.15,
+        bargroupgap=0.1,
+        barmode="stack",
+        font=dict(
+            # family="Courier New, monospace",
+            family="Game of Squids",
+            size=10
+        ),
+        margin=dict(r=0, l=0, b=0, t=0),
+    )
 
-
-
+    return fig
 
 col1, col2 = st.columns(2)
 
 with col1:
 
-    st.header(random_line('cons.txt')[:11])
-    st.image(img_src)
+    #st.header(random_line('cons.txt')[:11])
+    st.header("Welcome ")
+    st.image(get_img(img_src))
 
 with col2:
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(give_fig(a.c,a.name), use_container_width=True)
 
-st.balloons()
-# Print results.
-#for row in rows:
-#    st.write(f"{row.name} has a playerrr:")
+st.markdown(
+        """
+        <style>
+@font-face {
+  font-family: 'Game of Squids';
+  font-style: normal;
+  font-weight: 400;
+  src: url(squidfont.ttf) format('ttf');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+    html, body, [class*="css"]  {
+    font-family: 'Game of Squids';
+    }
+    </style>
+
+    """,
+        unsafe_allow_html=True,
+    )
+
+if count % 10 == 0:
+    st.balloons()

@@ -133,7 +133,7 @@ st.markdown(
   font-family: 'Game of Squids';
   font-style: normal;
   font-weight: 400;
-  src: url(squidfont.ttf) format('truetype');
+  src: localgit(squidfont.ttf) format('truetype');
 }
 
     html, body, [class*="css"]  {

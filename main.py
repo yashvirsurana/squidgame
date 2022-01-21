@@ -147,7 +147,7 @@ st.markdown(
 
 quote = open('quotes.txt').read().splitlines()
 num = (str(count)[-2])
-st.write(quote[int(num)*7%15])
+st.write(quote[(int(num)+15)*7%15])
 
 if count % 10 == 0:
     st.balloons()

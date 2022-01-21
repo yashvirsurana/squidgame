@@ -9,12 +9,12 @@ from PIL import Image
 import base64
 import random
 
-ENV='LIGHT'
+ENV=open(".streamlit/config.toml").read().splitlines()[1].split('=')[1].strip('\"')
 
-if ENV=='DARK':
+if ENV=="dark":
     pio.templates.default = "plotly_dark"
     line_col = "rgb(255, 255, 255)"
-elif ENV=='LIGHT':
+elif ENV=="light":
     pio.templates.default = "plotly_white"
     line_col = "rgb(0, 0, 0)"
 

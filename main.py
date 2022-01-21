@@ -106,7 +106,7 @@ def give_fig(x,y):
         barmode="stack",
         font=dict(
             # family="Courier New, monospace",
-            family="Game of Squids",
+            family="squid",
             size=10
         ),
         margin=dict(r=0, l=0, b=0, t=0),
@@ -115,16 +115,6 @@ def give_fig(x,y):
     return fig
 
 col1, col2 = st.columns(2)
-
-with col1:
-
-    #st.header(random_line('cons.txt')[:11])
-    st.header("Welcome...")
-    st.image(get_img(img_src))
-
-with col2:
-
-    st.plotly_chart(give_fig(a.c,a.name), use_container_width=True)
 
 st.markdown(
         """
@@ -145,6 +135,17 @@ st.markdown(
     """,
         unsafe_allow_html=True,
     )
+
+
+with col1:
+
+    #st.header(random_line('cons.txt')[:11])
+    st.header("Welcome...")
+    st.image(get_img(img_src))
+
+with col2:
+
+    st.plotly_chart(give_fig(a.c,a.name), use_container_width=True)
 
 quote = open('quotes.txt').read().splitlines()
 num = (str(count)[-2])
